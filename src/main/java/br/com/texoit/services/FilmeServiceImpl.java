@@ -131,15 +131,17 @@ public class FilmeServiceImpl implements FilmeService {
 	      }
 	      for (Filme Filme : Filmes) {
 	        if (!Filme.getWinner()) {
-	          continue;
+	          continue; 
 	        }
 	        IntervaloPremiacaoDTO intervalo = new IntervaloPremiacaoDTO();
 	        for (String produtor : this.getProducers(Filme)) {
 	          intervalo.setProducer(produtor);
 	          if (intervalsDTO.contains(intervalo)) {
 	            int index = intervalsDTO.indexOf(intervalo);
+	            Integer previousWin = intervalsDTO.get(index).getFollowingWin();
 	            intervalsDTO.get(index).setFollowingWin(Filme.getYear());
 	            intervalsDTO.get(index).setInterval(calculaIntervalo(intervalsDTO.get(index)));
+	            intervalsDTO.get(index).setPreviousWin(previousWin);
 	          } else {
 	            IntervaloPremiacaoDTO novoIntervalo = new IntervaloPremiacaoDTO();
 	            novoIntervalo.setPreviousWin(Filme.getYear());
